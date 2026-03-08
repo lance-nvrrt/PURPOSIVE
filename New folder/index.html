@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sugbo — Queen of the South</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: #fffdf0; color: #222; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(245, 200, 66, 0.95);
+      border-bottom: 2px solid #c9a020;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 58px;
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: #1a1205; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: #3d2e0a; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+    .nav-links a:hover { color: #c47f00; }
+
+    /* HERO — Sinulog background */
+    .hero {
+      min-height: 100vh;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Sinulog_2020_Grand_Parade.jpg/1280px-Sinulog_2020_Grand_Parade.jpg');
+      background-size: cover;
+      background-position: center top;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 100px 20px 60px;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(245,200,66,0.82) 0%, rgba(232,144,26,0.78) 100%);
+    }
+    .hero > * { position: relative; z-index: 1; }
+    .hero-badge {
+      background: rgba(255,255,255,0.4);
+      border-radius: 999px; padding: 6px 18px;
+      font-size: 0.75rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: #3b1f00;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 900; line-height: 1.05; color: #1a1205;
+    }
+    .hero h1 em { font-style: italic; color: #5a2e00; }
+    .hero p {
+      font-family: 'Lora', serif;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: #3b1f00; max-width: 520px;
+      margin: 1.2rem auto 0; line-height: 1.7;
+    }
+
+    /* Hero Video Styling */
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fills hero container */
+  z-index: -1;       /* behind text */
+}
+
+/* Optional: Keep gradient overlay readable */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(245,200,66,0.35) 0%, rgba(232,144,26,0.35) 100%);
+  z-index: 0; /* sits above video, below text */
+}
+    .scroll-hint { margin-top: 3rem; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: #3b1f00; }
+    .scroll-hint span { display: block; width: 1px; height: 40px; background: #3b1f00; margin: 6px auto 0; }
+
+    /* ESSAY */
+    .essay-bg { background: #fffdf0; padding: 70px 5%; }
+    .essay-inner { max-width: 780px; margin: 0 auto; }
+    .section-label { font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; color: #9a7d3a; margin-bottom: 6px; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; color: #1a1205; }
+    .section-title em { font-style: italic; color: #e8901a; }
+    .divider { width: 55px; height: 3px; background: linear-gradient(90deg, #f5c842, #e8901a); border-radius: 2px; margin: 14px 0 30px; }
+    .essay-inner p {
+      font-family: 'Lora', serif;
+      font-size: 1.05rem; line-height: 1.95;
+      color: #3d2e0a; margin-bottom: 1.4rem;
+    }
+    .essay-inner p:first-of-type::first-letter {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem; font-weight: 900;
+      float: left; line-height: 1;
+      margin: 4px 8px 0 0; color: #e8901a;
+    }
+
+    /* CARDS */
+    .cards-bg { background: #fff8dc; padding: 70px 5%; }
+    .cards-wrap { max-width: 1100px; margin: 0 auto; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; margin-top: 30px; }
+    .card { background: #fff; border-radius: 8px; overflow: hidden; border: 2px solid #f5e0a0; transition: transform 0.2s, box-shadow 0.2s; }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(200,150,20,0.18); }
+    .card img { width: 100%; height: 180px; object-fit: cover; display: block; }
+    .card-body { padding: 16px; }
+    .card-tag { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: #e8901a; font-weight: 600; margin-bottom: 4px; }
+    .card-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: #1a1205; margin-bottom: 8px; }
+    .card-desc { font-family: 'Lora', serif; font-size: 0.88rem; line-height: 1.65; color: #5a4020; }
+
+    /* CULTURE BG */
+    .culture-bg { background: #fffdf0; padding: 70px 5%; }
+
+    /* FOOTER */
+    footer { background: #1a1205; text-align: center; padding: 36px 20px; color: rgba(255,220,100,0.6); }
+    footer .f-logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900; color: #f5c842; margin-bottom: 6px; }
+    footer p { font-size: 0.85rem; line-height: 1.8; }
+
+    .cards-grid a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Sugbo</div>
+  <ul class="nav-links">
+    <li><a href="#essay">The Essay</a></li>
+    <li><a href="#spots">Best Spots</a></li>
+    <li><a href="#culture">Culture</a></li>
+  </ul>
+</nav>
+
+<!-- HERO with video background -->
+<div class="hero">
+  <!-- Hero Video -->
+  <video autoplay muted loop playsinline class="hero-video">
+    <source src="shortclip.mp4" type="video/mp4">
+    <!-- Optional fallback image for older browsers -->
+  </video>
+
+  <h1>Sugbo —<br/><em>Queen of the South</em></h1>
+  <p>Where ancient history, vibrant festivals, and breathtaking natural wonders converge at the heart of the Visayas.</p>
+  <div class="scroll-hint">Scroll to explore <span></span></div>
+</div>
+
+<!-- ESSAY -->
+<div class="essay-bg" id="essay">
+  <div class="essay-inner">
+    <div class="section-label">Featured Essay</div>
+    <h2 class="section-title">The Soul of <em>Sugbo</em></h2>
+    <div class="divider"></div>
+    <p>Cebu is not just a place — it is a feeling. Sitting at the heart of the Visayas, this island has been a centre of life, trade, and faith for centuries. Long before Spanish ships arrived, Cebu was already a thriving port, buzzing with merchants from China, Java, and Borneo. The people here have always carried a quiet pride — warm, welcoming, and deeply rooted in who they are.</p>
+    <p>In 1521, Ferdinand Magellan arrived and planted a cross on Cebuano soil, a moment that changed the history of the Philippines. But it was the great warrior Lapu-Lapu who showed the world that Cebu bows to no one. His victory at the Battle of Mactan was the first act of Filipino resistance, and his spirit lives on in every Cebuano heart to this day.</p>
+    <p>Faith is woven into everything in Cebu. Every January, the streets fill with colour and music during Sinulog — one of the grandest festivals in all of Asia. Nature here is equally breathtaking: turquoise waterfalls, whale sharks gliding through warm seas, dramatic peaks, and white sand islands. And the food — Cebu's legendary lechon has been called the best roast pig in the world. Cebuanos simply smile and nod. They already knew.</p>
+  </div>
+</div>
+
+<!-- BEST SPOTS -->
+<div class="cards-bg" id="spots">
+  <div class="cards-wrap">
+    <div class="section-label">Discover</div>
+    <h2 class="section-title">Best <em>Spots</em> in Cebu</h2>
+    <div class="divider"></div>
+    <div class="cards-grid">
+
+      <a href="https://kawasanfalls.net/#google_vignette" target="_blank" style="text-decoration:none; color:inherit;">
+      <div class="card">
+        <img src="Kawasan-Falls-1.jpg"Kawasan Falls" onerror="this.style.background='linear-gradient(135deg,#1a9e8f,#0d5e5a)';this.style.height='180px';this.removeAttribute('src')"/>
+        <div class="card-body">
+          <div class="card-tag">Natural Wonder</div>
+          <div class="card-title">Kawasan Falls</div>
+          <p class="card-desc">A stunning three-tiered waterfall in Badian with vivid turquoise water. Swim, raft, or go canyoneering through lush jungle rivers.</p>
+        </div>
+      </div>
+      </a>
+
+            <a href="https://www.oslobwhalesharks.com/?srsltid=AfmBOorOjoXAIBdcHVvab3-QQjL9JgkXTXEWW2xjCliNTyhac6_oDBAF" target="_blank" style="text-decoration:none; color:inherit;">
+      <div class="card">
+        <img src="images.jpg" alt="Whale Shark Oslob" onerror="this.style.background='linear-gradient(135deg,#1e4d8c,#3a87c8)';this.style.height='180px';this.removeAttribute('src')"/>
+        <div class="card-body">
+          <div class="card-tag">Marine Life</div>
+          <div class="card-title">Oslob Whale Sharks</div>
+          <p class="card-desc">Swim alongside the world's biggest fish in the warm coastal waters of Oslob — a rare and unforgettable experience.</p>
+        </div>
+      </div>
+            </a>
+
+            <a href="https://santoninodecebubasilica.org/basilica-minore-del-santo-nino/magellans-cross/" target="_blank" style="text-decoration:none; color:inherit;">
+      <div class="card">
+        <img src="magellan.jpg" alt="Magellan's Cross" onerror="this.style.background='linear-gradient(135deg,#7b4f12,#c9a020)';this.style.height='180px';this.removeAttribute('src')"/>
+        <div class="card-body">
+          <div class="card-tag">Heritage Landmark</div>
+          <div class="card-title">Magellan's Cross</div>
+          <p class="card-desc">Planted in 1521 by Ferdinand Magellan, this sacred cross in Cebu City marks the birth of Christianity in the Philippines.</p>
+        </div>
+      </div>
+      </a>
+            <a href="https://safeandhealthytravel.com/osmena-peak/" target="_blank" style="text-decoration:none; color:inherit;">
+      <div class="card">
+        <img src="osmena.jpg" alt="Osmena Peak" onerror="this.style.background='linear-gradient(135deg,#2d6a2d,#6ab04c)';this.style.height='180px';this.removeAttribute('src')"/>
+        <div class="card-body">
+          <div class="card-tag">Highland Trek</div>
+          <div class="card-title">Osmena Peak</div>
+          <p class="card-desc">The highest point in Cebu with dramatic jagged ridges and sweeping island views. Magical at sunrise and perfect for hikers.</p>
+        </div>
+      </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- CULTURE -->
+<div class="culture-bg" id="culture">
+  <div class="cards-wrap">
+    <div class="section-label">Living Traditions</div>
+    <h2 class="section-title">Cebuano <em>Culture</em></h2>
+    <div class="divider"></div>
+    <div class="cards-grid">
+
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Sinulog_2020_Grand_Parade.jpg/640px-Sinulog_2020_Grand_Parade.jpg" alt="Sinulog Festival" onerror="this.style.background='linear-gradient(135deg,#c94f1a,#f5a842)';this.style.height='180px';this.removeAttribute('src')"/>
+        <div class="card-body">
+          <div class="card-tag">Festival</div>
+          <div class="card-title">Sinulog Festival</div>
+          <p class="card-desc">Every January, Cebu erupts in dance, colour, and music honouring the Sto. Niño — one of the biggest festivals in Asia.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Cebu_Lechon.jpg/640px-Cebu_Lechon.jpg" alt="Cebu Lechon" onerror="this.style.background='linear-gradient(135deg,#8b3a0a,#d4721a)';this.style.height='180px';this.removeAttribute('src')"/>
+        <div class="card-body">
+          <div class="card-tag">Food & Tradition</div>
+          <div class="card-title">Cebu Lechon</div>
+          <p class="card-desc">Slow-roasted over charcoal, stuffed with lemongrass and native spice — widely regarded as the best roast pig in the world.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Lapu-Lapu_Shrine.jpg/640px-Lapu-Lapu_Shrine.jpg" alt="Lapu-Lapu Shrine" onerror="this.style.background='linear-gradient(135deg,#4a1a6e,#9b5bd5)';this.style.height='180px';this.removeAttribute('src')"/>
+        <div class="card-body">
+          <div class="card-tag">History & Pride</div>
+          <div class="card-title">Lapu-Lapu's Legacy</div>
+          <p class="card-desc">The chieftain who defeated Magellan in 1521 — the first Filipino hero. His courage is the soul of Cebuano identity.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Basilica_Minore_del_Santo_Nino_de_Cebu.jpg/640px-Basilica_Minore_del_Santo_Nino_de_Cebu.jpg" alt="Basilica del Sto Nino" onerror="this.style.background='linear-gradient(135deg,#1a5a6e,#3ab5d5)';this.style.height='180px';this.removeAttribute('src')"/>
+        <div class="card-body">
+          <div class="card-tag">Faith & Heritage</div>
+          <div class="card-title">Basilica del Sto. Niño</div>
+          <p class="card-desc">The oldest Catholic church in the Philippines, home to the miraculous image of the Child Jesus venerated since 1521.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">Sugbo</div>
+  <p>Queen of the South — A blog made with love for Cebu.</p>
+  <p style="margin-top: 6px; font-size: 0.75rem;">Cebu, Philippines &nbsp;✦&nbsp; Est. 1521</p>
+</footer>
+
+</body>
+</html>
